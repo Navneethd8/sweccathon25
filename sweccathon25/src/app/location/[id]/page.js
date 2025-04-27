@@ -6,6 +6,7 @@ import { doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { getCurrentPosition } from '../../../utils/geolocation'; // Custom geolocation hook
 import { locations as initialLocations } from '../../data/locations'; // Import locations from data/locations.js
 import { useRouter } from 'next/navigation';
+import LoadingScreen from '../../components/Loading'; // Import LoadingScreen component
 
 const LocationDetail = ({ params }) => {
   const router = useRouter();
@@ -126,22 +127,24 @@ const LocationDetail = ({ params }) => {
       console.log('User is too far from the location');
       router.push("/dashboard");
     }
+    else{
+        const userDocRef = doc(db, 'Users', user.uid);
+        await updateDoc(userDocRef, {
+        checkedInLocations: arrayUnion(location.id),
+        });
 
-    // Proceed with the check-in logic if the location is valid
-    const userDocRef = doc(db, 'Users', user.uid);
-    await updateDoc(userDocRef, {
-      checkedInLocations: arrayUnion(location.id),
-    });
+        setIsCheckedIn(true); // Mark location as checked-in
+        alert('Check-in successful!');
+        console.log('User checked-in successfully');
+        router.push("/dashboard");
 
-    setIsCheckedIn(true); // Mark location as checked-in
-    alert('Check-in successful!');
-    router.push("/dashboard");
-    console.log('User checked-in successfully');
+    }
+
   };
 
   if (loadingPhoto) {
     console.log('Loading location photo...');
-    return <p>Loading location...</p>;
+    return <LoadingScreen />; // Use the LoadingScreen component for the loading view
   }
 
   if (error) {
@@ -152,34 +155,33 @@ const LocationDetail = ({ params }) => {
   console.log('Rendering LocationDetail with location:', location);
 
   return (
-<div className="min-h-screen flex flex-col items-center justify-center bg-[#FFB7C5]">
-  <div className="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-10 w-full max-w-md shadow-lg flex flex-col items-center justify-center">
-    <h1 className="text-3xl font-bold text-[#4B2E83] mb-6 text-center">{location?.name}</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#FFB7C5]">
+      <div className="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-10 w-full max-w-md shadow-lg flex flex-col items-center justify-center">
+        <h1 className="text-3xl font-bold text-[#4B2E83] mb-6 text-center">{location?.name}</h1>
 
-    {/* Image fetched from API using the photo reference */}
-    {photoReference && (
-      <div className="mb-6">
-        <img
-          src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${encodeURIComponent(photoReference)}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
-          alt={location?.name}
-          className="rounded-lg mb-6"
-        />
+        {/* Image fetched from API using the photo reference */}
+        {photoReference && (
+          <div className="mb-6">
+            <img
+              src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${encodeURIComponent(photoReference)}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
+              alt={location?.name}
+              className="rounded-lg mb-6"
+            />
+          </div>
+        )}
+
+        <p className="text-center mb-6">{location?.funFact}</p>
+
+        {/* Check-In Button */}
+        <button
+          onClick={handleCheckIn}
+          className={`bg-[#4B2E83] text-white rounded-full py-3 px-8 mt-4 hover:bg-[#362366] transition ${isCheckedIn ? 'opacity-50 cursor-not-allowed' : ''}`}
+          disabled={isCheckedIn}
+        >
+          {isCheckedIn ? 'Already Checked In' : 'Check-In'}
+        </button>
       </div>
-    )}
-
-    <p className="text-center mb-6">{location?.funFact}</p>
-
-    {/* Check-In Button */}
-    <button
-      onClick={handleCheckIn}
-      className={`bg-[#4B2E83] text-white rounded-full py-3 px-8 mt-4 hover:bg-[#362366] transition ${isCheckedIn ? 'opacity-50 cursor-not-allowed' : ''}`}
-      disabled={isCheckedIn}
-    >
-      {isCheckedIn ? 'Already Checked In' : 'Check-In'}
-    </button>
-  </div>
-</div>
-
+    </div>
   );
 };
 

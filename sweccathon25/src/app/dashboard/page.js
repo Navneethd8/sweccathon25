@@ -7,6 +7,7 @@ import { locations as initialLocations } from "../data/locations";
 import LocationCard from "../components/LocationCard";
 import Image from "next/image";
 import Link from "next/link";
+import LoadingScreen from "../components/Loading"; // Import the LoadingScreen component
 
 export default function Dashboard() {
   const [profilePic, setProfilePic] = useState("");
@@ -72,8 +73,9 @@ export default function Dashboard() {
     loadLocationsWithPhotos();
   }, []);
 
+  // Show loading screen while data is fetching
   if (loading) {
-    return <p>Loading...</p>;
+    return <LoadingScreen />; // Use the LoadingScreen component for the loading view
   }
 
   if (error) {

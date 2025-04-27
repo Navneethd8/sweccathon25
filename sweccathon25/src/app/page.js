@@ -20,24 +20,36 @@ export default function Home() {
 
   return (
     <div
-      className="relative min-h-screen w-full overflow-hidden bg-no-repeat bg-cover bg-center"
+      className="relative min-h-screen w-full overflow-hidden bg-no-repeat bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: 'url("/etst.svg")' }}
     >
       {/* Navbar */}
       <nav className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-white/70 backdrop-blur-md rounded-full px-6 py-3 flex gap-6 items-center shadow-md z-50">
         <a
           href="/register"
-          className="text-black font-semibold hover:text-[#40E0D0] transition"
+          className="text-black font-semibold hover:text-[#4B2E83] transition"
         >
           Sign Up
         </a>
         <a
           href="/login"
-          className="text-black font-semibold hover:text-[#40E0D0] transition"
+          className="text-black font-semibold hover:text-[#4B2E83] transition"
         >
           Login
         </a>
       </nav>
+
+      {/* Hero Text */}
+      <div className="text-center px-6 md:px-10 z-30">
+        <div className="inline-block bg-white/70 backdrop-blur-md rounded-xl p-6 shadow-lg">
+          <h1 className="text-3xl md:text-5xl font-bold text-[#4B2E83] mb-4">
+            Missed the U District Food Walk?
+          </h1>
+          <p className="text-lg md:text-2xl text-[#4B2E83]">
+            Try out this mini bingo game that covers it for you!
+          </p>
+        </div>
+      </div>
 
       {/* Cherry blossom leaves */}
       {leaves.map((leaf) => (

@@ -6,9 +6,10 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Image from "next/image";
 import Link from "next/link";
-import {locations} from "../data/locations"; // Make sure path is correct
+import { locations } from "../data/locations"; // Make sure path is correct
 import { useRouter } from "next/navigation";
 import { deleteDoc } from "firebase/firestore"; // import deleteDoc at the top
+import LoadingScreen from "../components/Loading"; // Import LoadingScreen component
 
 const Profile = () => {
   const [profilePic, setProfilePic] = useState("");
@@ -20,6 +21,7 @@ const Profile = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
+
   useEffect(() => {
     const fetchProfileData = async () => {
       console.log("Fetching profile data...");
@@ -133,7 +135,7 @@ const Profile = () => {
       );
 };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingScreen />; // Display LoadingScreen while data is loading
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -205,13 +207,13 @@ const Profile = () => {
         <div className="mt-6 flex space-x-4">
           <button
             onClick={handleSignOut}
-            className="bg-[#FF6B6B] text-white rounded-full py-3 px-8 hover:bg-[#FF3C3C] transition"
+            className="bg-[#4B2E83] text-white rounded-full py-3 px-8 hover:bg-[#4B2E83] transition"
           >
             Sign Out
           </button>
           <button
             onClick={handleDeleteAccount}
-            className="bg-[#FF3C3C] text-white rounded-full py-3 px-8 hover:bg-[#FF0000] transition"
+            className="bg-[#4B2E83] text-white rounded-full py-3 px-8 hover:bg-[#4B2E83] transition"
           >
             Delete Account
           </button>

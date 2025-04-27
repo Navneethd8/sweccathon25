@@ -38,8 +38,10 @@ export const locations = [
     {
       id: 6,
       name: "Boba Up",
-      lat: 47.6585,
-      lng: -122.3133,
+      // lat: 47.6585,
+      // lng: -122.3133,
+      lat:47.66027559358088,
+      lng:-122.30564722929384,
       funFact: "Self-serve bubble tea spot with a variety of flavors and toppings.",
     },
     {
@@ -61,10 +63,8 @@ export const locations = [
     {
       id: 9,
       name: "Shultzy’s Bar & Grill",
-      // lat: 47.6572,
-      // lng: -122.3130,
-      lat:47.66027559358088,
-      lng:-122.30564722929384,
+      lat: 47.6572,
+      lng: -122.3130,
       funFact: "A UW staple offering German sausages and a wide beer selection.",
     },
   ];
