@@ -45,3 +45,5 @@ It is important to know your capabilities and scaffold and develop according to 
 6.  Utilize the Map API a lot more to get things like location ratings and reviews to make it more appealing to users to actually go to the places.
 
 7. An image gallery where users can upload images/ selfies of them at the location and fill up any empty space.
+
+
