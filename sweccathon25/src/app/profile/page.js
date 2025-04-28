@@ -94,7 +94,7 @@ const Profile = () => {
     console.log("File selected:", file.name);
     setIsUploading(true);
 
-    const storageRef = ref(storage, `profile_pics/${user.uid}`);
+    const storageRef = ref(storage, `profilePictures/${user.uid}`);
     console.log("Uploading to storage reference:", storageRef);
 
     const uploadTask = uploadBytesResumable(storageRef, file);
