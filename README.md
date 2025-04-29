@@ -1,5 +1,8 @@
 # Ave Bingo (or Bingo on the Ave)!
 
+[Link to Demo!](https://avebingo.vercel.app/)
+
+
 ## Inspiration
 
 I had a lot of FOMO from missing out on the U District Food walk that happens in the fall and I decided take matters into my own hands and turned it into a game of mini bingo, which was something that I used to play a lot growing up.
