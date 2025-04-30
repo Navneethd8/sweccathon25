@@ -2,9 +2,10 @@ export const locations = [
     {
       id: 1,
       name: "Big Time Brewing",
-      image: "/images/big-time-brewing.jpg",
-      lat: 47.6575,
-      lng: -122.3130,
+      lat: 47.652917009005776, 
+      long: -122.31131809259449,
+      // lat: 47.6575,
+      // lng: -122.3130,
       funFact: "Seattle’s oldest brewpub, serving craft beers since 1988.",
     },
     {
