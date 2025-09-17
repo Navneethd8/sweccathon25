@@ -22,6 +22,7 @@ export default function SignUpPage() {
 
   return (
     <div>
+      <title>Register</title>
       <Navbar />
       <div className="min-h-screen flex items-center justify-center bg-[var(--background)] px-4">
         <div className="bg-white/80 shadow-lg rounded-2xl p-8 w-full max-w-md flex flex-col items-center backdrop-blur-md">

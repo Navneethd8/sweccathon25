@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { locations as initialLocations } from "../data/locations";
 import LocationCard from "../components/LocationCard";
 import Image from "next/image";
@@ -40,29 +40,50 @@ export default function Dashboard() {
         // Fetch locations with photos
         const response = await fetch('/api/getPlacePhotoReferences', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ locations: initialLocations }),
         });
-
+  
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.error || 'Failed to fetch location photo references from the server.');
         }
-
+  
         const data = await response.json();
         setLocationsWithPhotos(data);
-
-        // Fetch checked-in locations from Firebase
+  
         const user = auth.currentUser;
         if (user) {
-          const userDoc = await getDoc(doc(db, "Users", user.uid));
-          if (userDoc.exists()) {
-            const data = userDoc.data();
-            setCheckedInLocations(data.checkedInLocations || []);
+          const userDocRef = doc(db, "Users", user.uid);
+          const userDoc = await getDoc(userDocRef);
+  
+          let randomLocations = [];
+  
+          if (userDoc.exists() && userDoc.data().selectedLocations) {
+            // Use stored selection
+            const storedIds = userDoc.data().selectedLocations;
+            randomLocations = data.filter(location => storedIds.includes(location.id));
+          } else {
+            // Shuffle and pick 9 locations
+            const shuffled = data
+              .map(value => ({ value, sort: Math.random() }))
+              .sort((a, b) => a.sort - b.sort)
+              .map(({ value }) => value);
+  
+            randomLocations = shuffled.slice(0, 9);
+  
+            // Save selection to Firestore
+            await setDoc(userDocRef, {
+              selectedLocations: randomLocations.map(loc => loc.id)
+            }, { merge: true });
           }
+  
+          setLocationsWithPhotos(randomLocations);
+  
+          // Also fetch checked-in locations if any
+          setCheckedInLocations(userDoc.exists() ? (userDoc.data().checkedInLocations || []) : []);
         }
+  
       } catch (err) {
         setError(err.message);
       } finally {

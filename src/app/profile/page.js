@@ -142,6 +142,7 @@ const Profile = () => {
     <div className="min-h-screen bg-[var(--background)] flex flex-col items-center">
       <div className="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-10 w-full max-w-4xl shadow-lg mt-8 flex flex-col items-center">
         {/* Profile Picture */}
+        <title>Profile</title>
         <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4">
           {profilePic && !isEditing ? (
             <Image

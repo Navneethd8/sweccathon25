@@ -22,32 +22,11 @@ export default function Home() {
   return (
     <div
       className="relative min-h-screen w-full overflow-hidden bg-no-repeat bg-cover bg-center flex items-center justify-center"
-      // style={{ backgroundImage: 'url("/etst.svg")' }}
+      style={{ backgroundImage: 'url("/etst.svg")' }}
     >
       <Navbar />
-      {/* <nav className="fixed top-0 left-0 flex items-center justify-between w-full max-w-screen h-[100px] px-[34px] py-[23px] bg-[#5DB075] shadow-[0_4px_5px_0_rgba(0,0,0,0.1)] mx-auto">
-        <a href="/" className="text-white font-bold text-xl">
-          Scavenger Hunt By ET
-        </a>
-        <div className="flex gap-[368px]">
-          <a
-            href="/register"
-            className="text-white font-semibold hover:text-[#4B2E83] transition"
-          >
-            Sign Up
-          </a>
-          <a
-            href="/login"
-            className="text-white font-semibold hover:text-[#4B2E83] transition"
-          >
-            Login
-          </a>
-        </div>
-      </nav> */}
-
-      {/* Hero Text */}
       <div className="text-center px-6 md:px-10 z-30">
-        <div className="inline-block bg-white/70 backdrop-blur-md rounded-xl p-6 shadow-lg">
+        <div className="inline-block bg-[#DFEFE3]/70 backdrop-blur-md rounded-xl p-6 shadow-lg">
           <h1 className="text-3xl md:text-5xl font-bold text-[#4B2E83] mb-4">
             Missed the U District Food Walk?
           </h1>
