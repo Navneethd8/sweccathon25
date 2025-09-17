@@ -203,7 +203,6 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="mt-6 flex space-x-4">
           <button
             onClick={handleSignOut}
