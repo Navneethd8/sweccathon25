@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { login } from '../firebase/authService'; // make sure the path is correct
+import Navbar from '../components/Navbar';
 
 export default function Login() {
   const router = useRouter();
@@ -20,7 +21,10 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FFB7C5] p-6">
+    <div>
+      <title>Login</title>
+          <Navbar/>
+    <div className="min-h-screen flex items-center justify-center bg-[var(--background)] p-6">
       <div className="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-10 w-full max-w-md shadow-lg">
         <h1 className="text-3xl font-bold text-[#4B2E83] mb-6 text-center">Welcome Back</h1>
         
@@ -65,6 +69,9 @@ export default function Login() {
           </a>
         </div>
       </div>
+    </div>
+
+
     </div>
   );
 }

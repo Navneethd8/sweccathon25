@@ -139,7 +139,7 @@ const Profile = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="min-h-screen bg-[#FFB7C5] flex flex-col items-center">
+    <div className="min-h-screen bg-[var(--background)] flex flex-col items-center">
       <div className="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-10 w-full max-w-4xl shadow-lg mt-8 flex flex-col items-center">
         {/* Profile Picture */}
         <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
   const [leaves, setLeaves] = useState([]);
@@ -21,23 +22,28 @@ export default function Home() {
   return (
     <div
       className="relative min-h-screen w-full overflow-hidden bg-no-repeat bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: 'url("/etst.svg")' }}
+      // style={{ backgroundImage: 'url("/etst.svg")' }}
     >
-      {/* Navbar */}
-      <nav className="absolute top-6 left-1/2 transform -translate-x-1/2 bg-white/70 backdrop-blur-md rounded-full px-6 py-3 flex gap-6 items-center shadow-md z-50">
-        <a
-          href="/register"
-          className="text-black font-semibold hover:text-[#4B2E83] transition"
-        >
-          Sign Up
+      <Navbar />
+      {/* <nav className="fixed top-0 left-0 flex items-center justify-between w-full max-w-screen h-[100px] px-[34px] py-[23px] bg-[#5DB075] shadow-[0_4px_5px_0_rgba(0,0,0,0.1)] mx-auto">
+        <a href="/" className="text-white font-bold text-xl">
+          Scavenger Hunt By ET
         </a>
-        <a
-          href="/login"
-          className="text-black font-semibold hover:text-[#4B2E83] transition"
-        >
-          Login
-        </a>
-      </nav>
+        <div className="flex gap-[368px]">
+          <a
+            href="/register"
+            className="text-white font-semibold hover:text-[#4B2E83] transition"
+          >
+            Sign Up
+          </a>
+          <a
+            href="/login"
+            className="text-white font-semibold hover:text-[#4B2E83] transition"
+          >
+            Login
+          </a>
+        </div>
+      </nav> */}
 
       {/* Hero Text */}
       <div className="text-center px-6 md:px-10 z-30">
@@ -68,8 +74,8 @@ export default function Home() {
           }}
         >
           <img
-            src="/cherry-blossom-outline.svg"
-            alt="cherry blossom leaf"
+            src="/maple-leaf.svg"
+            alt="maple leaf"
             style={{ width: "100%", height: "auto" }}
           />
         </div>
