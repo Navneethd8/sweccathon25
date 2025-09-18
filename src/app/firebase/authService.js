@@ -35,7 +35,7 @@ export async function signUp(email, password, file, router) {
     router.push('/');
     return user;
   } catch (error) {
-    console.error('Signup error:', error.message);
+    // console.error('Signup error:', error.message);
     throw error;
   }
 }
@@ -47,12 +47,11 @@ export async function login(email, password, router) {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    console.log('Logged In:', user.uid);
 
     router.push('/dashboard');
     return user;
   } catch (error) {
-    console.error('Login error:', error.message);
+    // console.error('Login error:', error.message);
     throw error;
   }
 }

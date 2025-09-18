@@ -4,7 +4,7 @@ export const locations = [
     name: "Big Time Brewing",
     lat: 47.652917,
     lng: -122.311318,
-    funFact: "Seattle’s oldest brewpub, serving craft beers since 1988.",
+    funFact: "Seattle's oldest brewpub, serving craft beers since 1988.",
     hint: "Find the place where time is always pouring a pint."
   },
   {
@@ -29,15 +29,15 @@ export const locations = [
     lat: 47.659000,
     lng: -122.313100,
     funFact: "Fresh poke bowls with customizable toppings, popular for healthy quick meals.",
-    hint: "Looking for fresh fish in a bowl? You’re in the right spot."
+    hint: "Looking for fresh fish in a bowl? You're in the right spot."
   },
   {
     id: 5,
     name: "Pi Vegan Pizzeria",
     lat: 47.661000,
     lng: -122.313800,
-    funFact: "Seattle’s first all-vegan pizzeria, serving plant-based pies and dairy-free options.",
-    hint: "Pizza without cheese? Don’t worry, this spot knows how to do the math."
+    funFact: "Seattle's first all-vegan pizzeria, serving plant-based pies and dairy-free options.",
+    hint: "Pizza without cheese? Don't worry, this spot knows how to do the math."
   },
   {
     id: 6,
@@ -65,7 +65,7 @@ export const locations = [
   },
   {
     id: 9,
-    name: "Shultzy’s Bar & Grill",
+    name: "Shultzy's Bar & Grill",
     lat: 47.657200,
     lng: -122.313000,
     funFact: "Classic pub-style menu and big windows overlooking The Ave.",
@@ -85,14 +85,14 @@ export const locations = [
     lat: 47.658050,
     lng: -122.313390,
     funFact: "Middle Eastern flavors: gyros, falafel, and hearty wraps all day.",
-    hint: "A magic lamp won’t get you here, but a craving for shawarma will."
+    hint: "A magic lamp won't get you here, but a craving for shawarma will."
   },
   {
     id: 12,
     name: "Cafe Allegro",
     lat: 47.658670,
     lng: -122.312700,
-    funFact: "Seattle’s oldest coffeehouse, tucked underground; a UW institution since 1975.",
+    funFact: "Seattle's oldest coffeehouse, tucked underground; a UW institution since 1975.",
     hint: "Hidden in an alley, this cafe is a true Ave secret."
   },
   {
@@ -148,7 +148,7 @@ export const locations = [
     name: "Taste of Xi'an",
     lat: 47.662040,
     lng: -122.313330,
-    funFact: "Hand-pulled noodles and spicy lamb burgers in the style of Xi’an street food.",
+    funFact: "Hand-pulled noodles and spicy lamb burgers in the style of Xi'an street food.",
     hint: "Want a taste of northwest China? Hand-pulled is the way."
   },
   {
@@ -161,7 +161,7 @@ export const locations = [
   },
   {
     id: 21,
-    name: "Toasted",
+    name: "TOASTED. Bagels & Coffee",
     lat: 47.664750,
     lng: -122.311770,
     funFact: "Specialty toast & sandwich shop, popular brunch choice on The Ave north-end.",
@@ -181,7 +181,7 @@ export const locations = [
     lat: 47.660500,
     lng: -122.312800,
     funFact: "Farm-to-table brunch staples; famous for pancakes & local ingredients.",
-    hint: "Stack ‘em high — this brunch spot lets you pile on the toppings."
+    hint: "Stack 'em high — this brunch spot lets you pile on the toppings."
   },
   {
     id: 24,
@@ -189,11 +189,11 @@ export const locations = [
     lat: 47.659380,
     lng: -122.313340,
     funFact: "Vietnamese pho with bold broth and generous portions of beef or chicken.",
-    hint: "Fo’ real — steaming bowls of noodles are found here."
+    hint: "Fo' real — steaming bowls of noodles are found here."
   },
   {
     id: 25,
-    name: "Boba Gen Tea House",
+    name: "Boba Gem Tea House",
     lat: 47.658780,
     lng: -122.313570,
     funFact: "Bubble tea place with build-your-own options and frequent specials.",
@@ -205,7 +205,7 @@ export const locations = [
     lat: 47.659000,
     lng: -122.313420,
     funFact: "Teriyaki staples & rice bowls; quick lunch favorite.",
-    hint: "Looking for Seattle’s unofficial dish? It’s sizzling here."
+    hint: "Looking for Seattle's unofficial dish? It's sizzling here."
   },
   {
     id: 27,
@@ -221,11 +221,11 @@ export const locations = [
     lat: 47.657450,
     lng: -122.313110,
     funFact: "Laid-back café with solar-themed decor and great espresso options.",
-    hint: "Find your daily caffeine under the sun’s name."
+    hint: "Find your daily caffeine under the sun's name."
   },
   {
     id: 29,
-    name: "Chili’s South Indian Cuisine",
+    name: "Chili's South Indian Cuisine",
     lat: 47.659010,
     lng: -122.313060,
     funFact: "Authentic South Indian dishes like dosa, curry & thali platters.",

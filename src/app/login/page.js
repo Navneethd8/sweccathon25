@@ -24,8 +24,8 @@ export default function Login() {
     <div>
       <title>Login</title>
           <Navbar/>
-    <div className="min-h-screen flex items-center justify-center bg-[var(--background)] p-6">
-      <div className="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-10 w-full max-w-md shadow-lg">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--page-background)] p-6">
+      <div className="bg-[#4A8D5E] backdrop-blur-md rounded-3xl p-8 md:p-10 w-full max-w-md shadow-lg">
         <h1 className="text-3xl font-bold text-[#4B2E83] mb-6 text-center">Welcome Back</h1>
         
         {/* Actual Form */}
@@ -48,7 +48,7 @@ export default function Login() {
           />
           <button 
             type="submit" 
-            className="bg-[#4B2E83] text-white rounded-full py-3 hover:bg-[#362366] transition font-semibold"
+            className="bg-[#BEDFC8] text-black rounded-full py-3 hover:bg-[#7DC091] transition font-semibold"
           >
             Log In
           </button>

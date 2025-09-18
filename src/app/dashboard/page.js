@@ -14,6 +14,7 @@ export default function Dashboard() {
   const [profilePic, setProfilePic] = useState("");
   const [locationsWithPhotos, setLocationsWithPhotos] = useState([]);
   const [checkedInLocations, setCheckedInLocations] = useState([]);
+  const [selectedLocations, setSelectedLocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -66,6 +67,7 @@ export default function Dashboard() {
           if (userDoc.exists() && userDoc.data().selectedLocations) {
             // Use stored selection
             const storedIds = userDoc.data().selectedLocations;
+            setSelectedLocations(storedIds)
             randomLocations = data.filter(location => storedIds.includes(location.id));
           } else {
             const shuffled = data
@@ -103,7 +105,7 @@ export default function Dashboard() {
     return <p>Error Fetching Data!</p>;
   }
 
-  const totalLocations = initialLocations.length;
+  const totalLocations = selectedLocations.length;
   const progress = (checkedInLocations.length / totalLocations) * 100;
 
   return (
