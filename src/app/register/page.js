@@ -24,9 +24,9 @@ export default function SignUpPage() {
     <div>
       <title>Register</title>
       <Navbar />
-      <div className="min-h-screen flex items-center justify-center bg-[var(--background)] px-4">
-        <div className="bg-white/80 shadow-lg rounded-2xl p-8 w-full max-w-md flex flex-col items-center backdrop-blur-md">
-          <h1 className="text-3xl font-bold mb-6 text-[#4b2e83]">Create Account</h1>
+      <div className="min-h-screen flex items-center justify-center bg-[var(--page-background)] px-4">
+        <div className="bg-[#4A8D5E] shadow-lg rounded-2xl p-8 w-full max-w-md flex flex-col items-center backdrop-blur-md">
+          <h1 className="text-3xl font-bold mb-6 text-[var(--background)]">Create Account</h1>
           <form onSubmit={handleSignUp} className="w-full flex flex-col gap-4">
             
             <input
@@ -34,7 +34,7 @@ export default function SignUpPage() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="px-4 py-3 rounded-full border border-[#4b2e83] focus:outline-none focus:ring-2 focus:ring-[#4b2e83]/50"
+              className="bg-[#7DC091] px-4 py-3 rounded-full border border-black/10 focus:outline-none focus:ring-2 focus:ring-[#25462F]"
             />
             
             <input
@@ -42,7 +42,7 @@ export default function SignUpPage() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="px-4 py-3 rounded-full border border-[#4b2e83] focus:outline-none focus:ring-2 focus:ring-[#4b2e83]/50"
+              className="bg-[#7DC091] px-4 py-3 rounded-full border border-black/10 focus:outline-none focus:ring-2 focus:ring-[#25462F]"
             />
             
             <input
@@ -52,21 +52,21 @@ export default function SignUpPage() {
               className="block text-sm text-black file:mr-4 file:py-2 file:px-4
               file:rounded-full file:border-0
               file:text-sm file:font-semibold
-              file:bg-[#4b2e83] file:text-white
-              hover:file:bg-[#372063]"
+              file:bg-[#BEDFC8] file:text-black
+              hover:file:bg-[#7DC091]"
             />
 
             <button
               type="submit"
-              className="mt-4 bg-black text-white rounded-full py-3 font-semibold hover:bg-[#4b2e83] transition duration-300"
+              className="mt-4 bg-[#BEDFC8] text-black rounded-full py-3 hover:bg-[#7DC091] transition font-semibold"
             >
               Sign Up
             </button>
           </form>
 
-          <p className="text-sm text-black/60 mt-6">
+          <p className="text-sm text-white mt-6">
             Already have an account?{" "}
-            <a href="/login" className="text-[#4b2e83] hover:underline">Login</a>
+            <a href="/login" className="text-[#DFEFE3] hover:text-[#132317]">Login</a>
           </p>
         </div>
       </div>

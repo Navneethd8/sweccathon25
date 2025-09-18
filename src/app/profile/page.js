@@ -24,7 +24,6 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchProfileData = async () => {
-      console.log("Fetching profile data...");
       const currentUser = auth.currentUser;
       setUser(currentUser);
 
@@ -33,7 +32,6 @@ const Profile = () => {
         try {
           const userData = await getDoc(userDocRef);
           if (userData.exists()) {
-            console.log("User data fetched:", userData.data());
             const data = userData.data();
             setProfilePic(data.profilePicture);
             const checkedInIds = data.checkedInLocations || [];
@@ -69,15 +67,12 @@ const Profile = () => {
 
   const handleDeleteAccount = async () => {
     try {
-      console.log("Deleting account...");
       const currentUser = auth.currentUser;
       const userDocRef = doc(db, "Users", currentUser.uid);
   
       await deleteDoc(userDocRef);
-      console.log("Firestore document deleted");
   
       await currentUser.delete();
-      console.log("Firebase Authentication account deleted");
     
       alert("Account Deleted!")
       router.replace('/')
@@ -88,18 +83,14 @@ const Profile = () => {
   };
   
   const handleProfilePicEdit = async (e) => {
-    console.log("Profile picture edit initiated...");
     const file = e.target.files[0];
     if (!file) {
-      console.log("No file selected");
       return;
     }
 
-    console.log("File selected:", file.name);
     setIsUploading(true);
 
     const storageRef = ref(storage, `profilePictures/${user.uid}`);
-    console.log("Uploading to storage reference:", storageRef);
 
     const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -107,7 +98,6 @@ const Profile = () => {
         "state_changed",
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
         },
         (error) => {
           setError("Error uploading image.");
@@ -115,17 +105,14 @@ const Profile = () => {
           setIsUploading(false);
         },
         async () => {
-          console.log("Upload successful, getting download URL...");
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref); // 🛠️ <-- no parentheses
       
-          console.log("Download URL:", downloadURL);
       
           const userDocRef = doc(db, "Users", auth.currentUser.uid);
           try {
             await updateDoc(userDocRef, {
               profilePicture: downloadURL,
             });
-            console.log("Firestore updated with new profile picture URL");
       
             setProfilePic(downloadURL);
             setIsUploading(false);
@@ -177,7 +164,11 @@ const Profile = () => {
               type="file"
               accept="image/*"
               onChange={handleProfilePicEdit}
-              className="text-[#DFEFE3] cursor-pointer"
+              className="block text-sm text-black file:mr-4 file:py-2 file:px-4
+              file:rounded-full file:border-0
+              file:text-sm file:font-semibold
+              file:bg-[#BEDFC8] file:text-black
+              hover:file:bg-[#7DC091]"
             />
             {isUploading && <span className="mt-2 text-[#DFEFE3]">Uploading...</span>}
           </div>
