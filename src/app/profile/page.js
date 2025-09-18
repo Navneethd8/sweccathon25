@@ -37,9 +37,10 @@ const Profile = () => {
             const data = userData.data();
             setProfilePic(data.profilePicture);
             const checkedInIds = data.checkedInLocations || [];
+            const selectedLocationsIds = data.selectedLocations || [];
 
             const checkedIn = locations.filter((loc) => checkedInIds.includes(loc.id));
-            const unchecked = locations.filter((loc) => !checkedInIds.includes(loc.id));
+            const unchecked = locations.filter((loc) => (!checkedInIds.includes(loc.id) && selectedLocationsIds.includes(loc.id))); // Not Checked in and in Selected
 
             setCheckedInLocations(checkedIn);
             setUncheckedLocations(unchecked);
@@ -57,11 +58,14 @@ const Profile = () => {
   }, []);
 
   const handleSignOut = () => {
-    console.log("Signing out...");
     auth.signOut();
     alert('Signed Out!')
     router.replace('/')
   };
+
+  const handleGoBack = () =>{
+    router.replace('/dashboard')
+  }
 
   const handleDeleteAccount = async () => {
     try {
@@ -139,8 +143,8 @@ const Profile = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="min-h-screen bg-[var(--background)] flex flex-col items-center">
-      <div className="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-10 w-full max-w-4xl shadow-lg mt-8 flex flex-col items-center">
+    <div className="min-h-screen bg-[var(--page-background)] flex flex-col items-center">
+      <div className="bg-[#4A8D5E] backdrop-blur-md rounded-3xl p-8 md:p-10 w-[90%] max-w-4xl shadow-lg mt-8 flex flex-col items-center">
         {/* Profile Picture */}
         <title>Profile</title>
         <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4">
@@ -163,7 +167,7 @@ const Profile = () => {
         {!isEditing ? (
           <button
             onClick={() => setIsEditing(true)}
-            className="bg-[#4B2E83] text-white rounded-full p-2 px-6 hover:bg-[#362366] transition mb-6"
+            className="bg-[#BEDFC8] text-black rounded-full p-2 px-6 hover:bg-[#7DC091] transition mb-6"
           >
             Edit Profile Picture
           </button>
@@ -173,19 +177,18 @@ const Profile = () => {
               type="file"
               accept="image/*"
               onChange={handleProfilePicEdit}
-              className="text-[#4B2E83] cursor-pointer"
+              className="text-[#DFEFE3] cursor-pointer"
             />
-            {isUploading && <span className="mt-2 text-gray-600">Uploading...</span>}
+            {isUploading && <span className="mt-2 text-[#DFEFE3]">Uploading...</span>}
           </div>
         )}
 
-        {/* Locations */}
         <div className="flex flex-wrap w-full justify-between mb-6">
           <div className="w-full md:w-[48%]">
-            <h2 className="text-2xl font-semibold text-[#4B2E83] mb-4 text-center">Checked-In Locations</h2>
+            <h2 className="text-2xl font-bold text-[var(--background)] mb-4 text-center">Checked-In Locations</h2>
             <ul>
               {checkedInLocations.map((location) => (
-                <li key={location.id} className="mb-2 text-center">
+                <li key={location.id} className="mb-2 font-semibold text-center text-[#DFEFE3]">
                   {location.name}
                 </li>
               ))}
@@ -193,10 +196,10 @@ const Profile = () => {
           </div>
 
           <div className="w-full md:w-[48%]">
-            <h2 className="text-2xl font-semibold text-[#4B2E83] mb-4 text-center">Check them Out!</h2>
+            <h2 className="text-2xl font-bold text-[var(--background)] mb-4 text-center">Check them Out!</h2>
             <ul>
               {uncheckedLocations.map((location) => (
-                <li key={location.id} className="mb-2 text-center">
+                <li key={location.id} className="mb-2 font-semibold text-center text-[#DFEFE3]">
                   {location.name}
                 </li>
               ))}
@@ -204,18 +207,24 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="mt-6 flex space-x-4">
+        <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:space-x-4 sm:justify-center">
           <button
             onClick={handleSignOut}
-            className="bg-[#4B2E83] text-white rounded-full py-3 px-8 hover:bg-[#4B2E83] transition"
+            className="bg-[#BEDFC8] text-black rounded-full py-3 px-8 hover:bg-[#7DC091] transition w-full sm:w-auto"
           >
             Sign Out
           </button>
           <button
             onClick={handleDeleteAccount}
-            className="bg-[#4B2E83] text-white rounded-full py-3 px-8 hover:bg-[#4B2E83] transition"
+            className="bg-[#BEDFC8] text-black rounded-full py-3 px-8 hover:bg-[#7DC091] transition w-full sm:w-auto"
           >
             Delete Account
+          </button>
+          <button
+            onClick={handleGoBack}
+            className="bg-[#BEDFC8] text-black rounded-full py-3 px-8 hover:bg-[#7DC091] transition w-full sm:w-auto"
+          >
+            Go Back
           </button>
         </div>
       </div>
