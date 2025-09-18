@@ -1,13 +1,14 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { locations as initialLocations } from "../data/locations";
 import LocationCard from "../components/LocationCard";
 import Image from "next/image";
 import Link from "next/link";
-import LoadingScreen from "../components/Loading"; // Import the LoadingScreen component
+import LoadingScreen from "../components/Loading"; 
 
 export default function Dashboard() {
   const [profilePic, setProfilePic] = useState("");
@@ -16,28 +17,31 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch user's profile picture
   useEffect(() => {
-    const fetchProfilePicture = async () => {
-      const user = auth.currentUser;
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const userDoc = await getDoc(doc(db, "Users", user.uid));
-        if (userDoc.exists()) {
-          const data = userDoc.data();
-          setProfilePic(data.profilePicture);
+        try {
+          const userDoc = await getDoc(doc(db, "Users", user.uid));
+          if (userDoc.exists()) {
+            const data = userDoc.data();
+            setProfilePic(data.profilePicture || null);
+          }
+        } catch (err) {
+          console.error("Error fetching profile picture:", err);
         }
+      } else {
+        setProfilePic(null); // fallback when logged out
       }
-    };
-    fetchProfilePicture();
+    });
+  
+    return () => unsubscribe();
   }, []);
-
-  // Fetch locations with photos and check-in data
+  
   useEffect(() => {
     const loadLocationsWithPhotos = async () => {
       setLoading(true);
       setError(null);
       try {
-        // Fetch locations with photos
         const response = await fetch('/api/getPlacePhotoReferences', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -64,7 +68,6 @@ export default function Dashboard() {
             const storedIds = userDoc.data().selectedLocations;
             randomLocations = data.filter(location => storedIds.includes(location.id));
           } else {
-            // Shuffle and pick 9 locations
             const shuffled = data
               .map(value => ({ value, sort: Math.random() }))
               .sort((a, b) => a.sort - b.sort)
@@ -72,7 +75,6 @@ export default function Dashboard() {
   
             randomLocations = shuffled.slice(0, 9);
   
-            // Save selection to Firestore
             await setDoc(userDocRef, {
               selectedLocations: randomLocations.map(loc => loc.id)
             }, { merge: true });
@@ -80,7 +82,6 @@ export default function Dashboard() {
   
           setLocationsWithPhotos(randomLocations);
   
-          // Also fetch checked-in locations if any
           setCheckedInLocations(userDoc.exists() ? (userDoc.data().checkedInLocations || []) : []);
         }
   
@@ -94,32 +95,27 @@ export default function Dashboard() {
     loadLocationsWithPhotos();
   }, []);
 
-  // Show loading screen while data is fetching
   if (loading) {
-    return <LoadingScreen />; // Use the LoadingScreen component for the loading view
+    return <LoadingScreen />; 
   }
 
   if (error) {
     return <p>Error Fetching Data!</p>;
   }
 
-  // Calculate the progress percentage based on checked-in locations
   const totalLocations = initialLocations.length;
   const progress = (checkedInLocations.length / totalLocations) * 100;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FFB7C5]">
-      {/* Navbar */}
-      <div className="flex items-center justify-between px-6 py-4 bg-white/80 backdrop-blur-md shadow-md">
-        {/* Progress bar */}
-        <div className="flex-1 h-3 bg-gray-300 rounded-full overflow-hidden mx-4">
+    <div className="min-h-screen flex flex-col bg-[var(--page-background)]">
+      <div className="flex items-center justify-between px-6 py-4 bg-[var(--et)] backdrop-blur-md shadow-md">
+        <div className="flex-1 h-3 bg-[#BEDFC8] rounded-full overflow-hidden mx-4">
           <div
-            className="h-full bg-[#4B2E83]"
-            style={{ width: `${progress}%` }} // Dynamically update progress based on checked-in locations
+            className="h-full bg-[var(--foreground)]"
+            style={{ width: `${progress}%` }}
           />
         </div>
 
-        {/* Profile Picture */}
         <Link href="/profile">
           <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#4B2E83] cursor-pointer">
             {profilePic ? (
@@ -139,7 +135,6 @@ export default function Dashboard() {
         </Link>
       </div>
 
-      {/* Location Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-6 flex-grow">
         {locationsWithPhotos.map((location) => (
           <LocationCard key={location.id} location={location} />

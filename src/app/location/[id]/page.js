@@ -142,6 +142,11 @@ const LocationDetail = ({ params }) => {
 
   };
 
+  const handleGoBack = () => {
+    router.back(); // 👈 Next.js way to go back
+  };
+
+
   if (loadingPhoto) {
     console.log('Loading location photo...');
     return <LoadingScreen />; // Use the LoadingScreen component for the loading view
@@ -155,31 +160,40 @@ const LocationDetail = ({ params }) => {
   console.log('Rendering LocationDetail with location:', location);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#FFB7C5]">
-      <div className="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-10 w-full max-w-md shadow-lg flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold text-[#4B2E83] mb-6 text-center">{location?.name}</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--page-background)]">
+      <div className="bg-[#4A8D5E] backdrop-blur-md rounded-3xl p-8 md:p-10 w-[90%] max-w-md shadow-lg flex flex-col items-center justify-center">
+        <h1 className="text-3xl font-bold text-[var(--background)] mb-6 text-center">{location?.name}</h1>
 
-        {/* Image fetched from API using the photo reference */}
         {photoReference && (
           <div className="mb-6">
             <img
               src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${encodeURIComponent(photoReference)}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
               alt={location?.name}
-              className="rounded-lg mb-6"
+              className="rounded-lg mb-6 relative aspect-[16/9]"
             />
           </div>
         )}
 
-        <p className="text-center mb-6">{location?.funFact}</p>
+        <p className="text-center mb-6 text-[var(--background)]">{location?.funFact}</p>
+        <div className="flex gap-4">
+          <button
+            onClick={handleCheckIn}
+            className={`bg-[#BEDFC8] text-black rounded-full py-3 px-8 mt-4 hover:bg-[#7DC091] transition ${isCheckedIn ? 'opacity-70 cursor-not-allowed hover:bg-[#BEDFC8]' : ''}`}
+            disabled={isCheckedIn}
+          >
+            {isCheckedIn ? 'Already Checked In' : 'Check-In'}
+          </button>
+          <button
+            onClick={handleGoBack}
+            className={`bg-[#BEDFC8] text-black rounded-full py-3 px-8 mt-4 hover:bg-[#7DC091] transition`}
+          >
+            Go Back
+          </button>
 
-        {/* Check-In Button */}
-        <button
-          onClick={handleCheckIn}
-          className={`bg-[#4B2E83] text-white rounded-full py-3 px-8 mt-4 hover:bg-[#362366] transition ${isCheckedIn ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={isCheckedIn}
-        >
-          {isCheckedIn ? 'Already Checked In' : 'Check-In'}
-        </button>
+
+
+        </div>
+
       </div>
     </div>
   );
