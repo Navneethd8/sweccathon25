@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <div>
       <div className="fixed top-0 left-1/2 transform -translate-x-1/2 w-full max-w-screen z-50 sm:hidden">
-        <div className="flex justify-between items-center w-full max-w-screen h-[83px] px-[29px] py-[26px] bg-[#5DB075]">
+        <div className="flex justify-between items-center w-full max-w-screen h-[83px] px-[29px] py-[25px] bg-[#5DB075]">
           <a href="/" className="text-white font-bold text-lg">
             <img src="Group 1.png" alt="ET Logo" className="h-20 w-auto" />
           </a>

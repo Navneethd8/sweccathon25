@@ -6,38 +6,16 @@ import { auth, db } from "../firebase/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { locations as initialLocations } from "../data/locations";
 import LocationCard from "../components/LocationCard";
-import Image from "next/image";
-import Link from "next/link";
 import LoadingScreen from "../components/Loading"; 
+import AppNavbar from "../components/appNavbar";
 
 export default function Dashboard() {
-  const [profilePic, setProfilePic] = useState("");
   const [locationsWithPhotos, setLocationsWithPhotos] = useState([]);
   const [checkedInLocations, setCheckedInLocations] = useState([]);
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        try {
-          const userDoc = await getDoc(doc(db, "Users", user.uid));
-          if (userDoc.exists()) {
-            const data = userDoc.data();
-            setProfilePic(data.profilePicture || null);
-          }
-        } catch (err) {
-          console.error("Error fetching profile picture:", err);
-        }
-      } else {
-        setProfilePic(null); // fallback when logged out
-      }
-    });
-  
-    return () => unsubscribe();
-  }, []);
-  
+    
   useEffect(() => {
     const loadLocationsWithPhotos = async () => {
       setLoading(true);
@@ -109,39 +87,28 @@ export default function Dashboard() {
   const progress = (checkedInLocations.length / totalLocations) * 100;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--page-background)]">
-      <div className="flex items-center justify-between px-6 py-4 bg-[var(--et)] backdrop-blur-md shadow-md">
-        <div className="flex-1 h-3 bg-[#BEDFC8] rounded-full overflow-hidden mx-4">
-          <div
-            className="h-full bg-[var(--foreground)]"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+<div className="min-h-screen flex flex-col bg-[var(--page-background)]">
+  {/* Navbar row */}
+  <div className="fixed top-0 left-0 w-full z-50">
+    <AppNavbar />
+  </div>
 
-        <Link href="/profile">
-          <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#4B2E83] cursor-pointer">
-            {profilePic ? (
-              <Image
-                src={profilePic}
-                alt="Profile"
-                width={48}
-                height={48}
-                className="object-cover w-full h-full"
-              />
-            ) : (
-              <div className="bg-gray-300 w-full h-full flex items-center justify-center text-sm text-gray-600">
-                ?
-              </div>
-            )}
-          </div>
-        </Link>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-6 flex-grow">
-        {locationsWithPhotos.map((location) => (
-          <LocationCard key={location.id} location={location} />
-        ))}
-      </div>
+  {/* Progress bar + profile row */}
+  <div className="fixed top-16 left-0 w-full z-40 px-6 py-10 bg-[var(--et)] backdrop-blur-md shadow-md flex items-center justify-between">
+    <div className="flex-1 h-3 bg-[#BEDFC8] rounded-full overflow-hidden mx-4">
+      <div
+        className="h-full bg-[var(--foreground)] transition-all duration-300"
+        style={{ width: `${progress}%` }}
+      />
     </div>
+  </div>
+
+  {/* Content grid */}
+  <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-6  mt-50 flex-grow">
+    {locationsWithPhotos.map((location) => (
+      <LocationCard key={location.id} location={location} />
+    ))}
+  </div>
+</div>
   );
 }

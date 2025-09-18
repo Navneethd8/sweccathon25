@@ -20,20 +20,13 @@ const LocationDetail = ({ params }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log('useEffect triggered for params.id:', id);
-
-    // Check the type of id
-    console.log('Type of id from params:', typeof id);
-
     if (id) {
       // Ensure both sides of the comparison are the same type
       const locationDetails = initialLocations.find((loc) => loc.id === parseInt(id)); // Ensure both id and loc.id are numbers
       if (locationDetails) {
-        console.log('Location found:', locationDetails);
         setLocation(locationDetails);
         fetchLocationPhoto(locationDetails);
       } else {
-        console.log('Location not found for id:', id);
         router.push("/dashboard");
       }
     }
@@ -41,7 +34,6 @@ const LocationDetail = ({ params }) => {
 
   // Fetch location photo reference
   const fetchLocationPhoto = async (location) => {
-    console.log('Fetching photo for location:', location);
     setLoadingPhoto(true);
     setError(null);
     try {
@@ -51,13 +43,11 @@ const LocationDetail = ({ params }) => {
         body: JSON.stringify({ locations: [location] }),
       });
 
-      console.log('API response status:', response.status);
       if (!response.ok) {
         throw new Error('Failed to fetch location photo references from the server.');
       }
 
       const data = await response.json();
-      console.log('API response data:', data);
       setPhotoReference(data[0]?.image || null); // Set the correct image reference
     } catch (err) {
       console.error('Error fetching photo:', err);
@@ -68,20 +58,16 @@ const LocationDetail = ({ params }) => {
   };
 
   useEffect(() => {
-    console.log('Checking user check-in status...');
     if (user && location) {
       checkUserCheckIn(); // Check if the user has already checked in
     }
   }, [user, location]);
 
   const checkUserCheckIn = async () => {
-    console.log('Checking if user has checked into this location...');
     const userDocRef = doc(db, 'Users', user.uid);
     const userData = await getDoc(userDocRef);
     const checkedInLocations = userData.data()?.checkedInLocations || [];
     setIsCheckedIn(checkedInLocations.includes(location?.id)); // Check if location is already checked-in
-    console.log('Checked-in locations:', checkedInLocations);
-    console.log('Is checked-in:', checkedInLocations.includes(location?.id));
   };
 
   // Haversine formula to calculate distance between two points
@@ -103,28 +89,23 @@ const LocationDetail = ({ params }) => {
   };
 
   const handleCheckIn = async () => {
-    console.log('Handling check-in...');
     
     // Attempt to get the user location
     const position = await getCurrentPosition();
     if (!position) {
       alert('Unable to retrieve location. Please try again.');
-      console.log('Error retrieving user location');
       router.push("/dashboard");
     }
 
     // Set user location
     setUserLocation(position);
-    console.log('User location retrieved:', position);
 
     // Use the Haversine formula to calculate the distance
     const distance = calculateDistance(position.lat, position.lng, location.lat, location.lng);
-    console.log('Distance from location:', distance, 'meters');
 
     // Check if user is within 10 meters of the location
     if (distance > 10) {
       alert('You are too far from the location to check in!');
-      console.log('User is too far from the location');
       router.push("/dashboard");
     }
     else{
@@ -135,7 +116,6 @@ const LocationDetail = ({ params }) => {
 
         setIsCheckedIn(true); // Mark location as checked-in
         alert('Check-in successful!');
-        console.log('User checked-in successfully');
         router.push("/dashboard");
 
     }
@@ -148,16 +128,13 @@ const LocationDetail = ({ params }) => {
 
 
   if (loadingPhoto) {
-    console.log('Loading location photo...');
     return <LoadingScreen />; // Use the LoadingScreen component for the loading view
   }
 
   if (error) {
-    console.log('Error occurred:', error);
     return <p>{error}</p>;
   }
 
-  console.log('Rendering LocationDetail with location:', location);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--page-background)]">
